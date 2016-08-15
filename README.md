@@ -6,38 +6,56 @@ Lua resty client for myallocator api inspired by [Enrico's Nodejs myallocator cl
 #luarocks install lua-myallocator
 ```
 
+# Usage
+```
+local ma = require 'myallocator'
+local auth = {
+  vendor_id = 'xxx',
+  vendor_password = 'xxxx',
+  property_id = '739393',
+  property_password = 'xxx' 
+}
+
+local myallocator = ma:new(auth)
+-- get the room list
+local res = myallocator:RoomList(
+
+```
+
 # API Methods
 
-#### new 
+#### Configuration 
+
+new(auth_config) 
 - vendor_id
 - vendor_password
 - property_id
 - property_password
 
-#### ARIRulesList(params)
-Lists all existing ARIRules.
 
-#### ARIRulesUpdate(params)
-#### ARIUpdate(params) 
-#### ARIUpdateStatus(params)
-#### AssociatePropertyToPMS(params)
-#### AssociateUserToPMS(params)
-#### BookingList(params)
-#### BookingPaymentDownload(params)
-#### ChannelList(params)
-#### HelloUser(params)
-#### HelloVendor(params)
-#### HelloVendorUser(params)
-#### HelloWorld(params)
-#### LoopBookingCreate(params)
-#### PropertyChannelList(params)
-#### PropertyList(params)
-#### RoomAvailabilityList(params)
-#### RoomCreate(params)
-#### RoomList(params)
-#### RoomRemove(params)
-#### RoomUpdate(params)
-#### VendorSet(params)
+#### Supported Methods
+- ARIRulesList(params)
+- ARIRulesUpdate(params)
+- ARIUpdate(params) 
+- ARIUpdateStatus(params)
+- AssociatePropertyToPMS(params)
+- AssociateUserToPMS(params)
+- BookingList(params)
+- BookingPaymentDownload(params)
+- ChannelList(params)
+- HelloUser(params)
+- HelloVendor(params)
+- HelloVendorUser(params)
+- HelloWorld(params)
+- LoopBookingCreate(params)
+- PropertyChannelList(params)
+- PropertyList(params)
+- RoomAvailabilityList(params)
+- RoomCreate(params)
+- RoomList(params)
+- RoomRemove(params)
+- RoomUpdate(params)
+- VendorSet(params)
 
 # Reference
 [MyAllocator API](http://myallocator.github.io/apidocs)

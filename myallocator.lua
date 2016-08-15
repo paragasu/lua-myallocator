@@ -37,7 +37,8 @@ local api_method = {
 }
 
 -- create api function call
-local post_request  = function(req)
+-- request params as documented in http://myallocator.github.io/apidocs
+function _M.post_request(self, req)
   for k, v in pairs(auth) do req[k] = v end -- merge with auth
   local res = request.post(myallocator_api_url .. method, {
     data    = json.encode(req),
@@ -45,7 +46,6 @@ local post_request  = function(req)
   }) 
   return res.json()
 end
-
 
 -- config table
 function _M.new(self, auth)
@@ -57,7 +57,7 @@ function _M.new(self, auth)
   }
 
   for method in api_method do 
-    _M[method] = post_request 
+    _M[method] = self:post_request 
   end
   return setmetatable(_M, mt) 
 end
