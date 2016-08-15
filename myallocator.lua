@@ -48,10 +48,14 @@ end
 
 
 -- config table
--- Auth/VendorId, Auth/VendorPassword, Auth/PropertyId,  Auth/UserId, Auth/UserPassword
--- generate api method
-function _M.new(self, auth_config)
-  auth = auth_config
+function _M.new(self, auth)
+  auth = {
+    ['Auth/VendorId'] = auth.vendor_id,
+    ['Auth/VendorPassword'] = auth.vendor_password,
+    ['Auth/PropertyId'] = auth.property_id,
+    ['Auth/UserPassword'] = auth.property_password
+  }
+
   for method in api_method do 
     _M[method] = post_request 
   end
