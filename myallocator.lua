@@ -39,6 +39,7 @@ local api_method = {
 -- create api function call
 -- request params as documented in http://myallocator.github.io/apidocs
 function _M.post_request(self, req)
+  req = req or {} -- avoid nasty error 
   for k, v in pairs(auth) do req[k] = v end -- merge with auth
   local res = request.post(myallocator_api_url .. method, {
     data    = json.encode(req),

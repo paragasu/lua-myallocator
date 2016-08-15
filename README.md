@@ -18,7 +18,7 @@ local auth = {
 
 local myallocator = ma:new(auth)
 -- get the room list
-local res = myallocator:RoomList(
+local res = myallocator:RoomList()
 
 ```
 
