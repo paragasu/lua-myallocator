@@ -7,7 +7,7 @@ Lua resty client for myallocator api inspired by [Enrico's Nodejs myallocator cl
 ```
 
 # Usage
-```
+```lua
 local ma = require 'myallocator'
 local auth = {
   vendor_id = 'xxx',
