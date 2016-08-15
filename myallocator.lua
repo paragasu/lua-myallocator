@@ -36,13 +36,13 @@ local api_method = {
   'VendorSet'
 }
 
+-- create api function call
 local post_request  = function(req)
-  for k, v in pairs(auth) do req[k] = v end     
+  for k, v in pairs(auth) do req[k] = v end -- merge with auth
   local res = request.post(myallocator_api_url .. method, {
-    data    = ngx.encode_args(req),
+    data    = json.encode(req),
     headers = { ['Content-Type'] = 'application/json' }
   }) 
-
   return res.json()
 end
 
