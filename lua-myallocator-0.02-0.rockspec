@@ -1,8 +1,8 @@
 package = "lua-myallocator"
-version = "0.01-0"
+version = "0.02-0"
 source = {
    url = "git://github.com/paragasu/lua-myallocator",
-   tag = "v0.01-0"
+   tag = "v0.02-0"
 }
 description = {
    summary  = "Myallocator API client for lua",
