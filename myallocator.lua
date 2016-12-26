@@ -40,7 +40,10 @@ local api_method = {
 -- request params as documented in http://myallocator.github.io/apidocs
 function _M.post_request(self, req)
   req = req or {} -- avoid nasty error 
-  for k, v in pairs(auth) do req[k] = v end -- merge with auth
+  -- merge with auth
+  for k, v in pairs(auth) do 
+    if v then do req[k] = v end --only include key with valid value
+  end
   local res = request.post(myallocator_api_url .. method, {
     data    = json.encode(req),
     headers = { ['Content-Type'] = 'application/json' }
@@ -53,8 +56,11 @@ function _M.new(self, auth)
   auth = {
     ['Auth/VendorId'] = auth.vendor_id,
     ['Auth/VendorPassword'] = auth.vendor_password,
+    ['Auth/UserToken'] = auth.user_token,
     ['Auth/PropertyId'] = auth.property_id,
-    ['Auth/UserPassword'] = auth.property_password
+    ['Auth/UserId'] = auth.user_id, --optional
+    ['Auth/UserPassword'] = auth.user_password, --optional
+    ['Auth/PMSUserId'] = auth.pms_user_id --optional
   }
 
   for method in api_method do 
