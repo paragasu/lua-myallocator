@@ -44,7 +44,7 @@ function _M.new(self, args)
     ['Auth/VendorPassword'] = args.vendor_password,
     ['Auth/UserToken'] = args.user_token,
     ['Auth/PropertyId'] = args.property_id,
-    ['Auth/UserId'] = args.user_id, --optional
+    ['Auth/UserId'] = args.user_id, --optional (not an email address)
     ['Auth/UserPassword'] = args.user_password, --optional
     ['Auth/PMSUserId'] = args.pms_user_id --optional
   }
