@@ -5,6 +5,7 @@
 local request = require 'requests'
 local json = json or require 'cjson'
 local myallocator_api_url = 'https://api.myallocator.com/pms/v201408/json/'
+local inspect = require 'inspect'
 local auth
 
 local _M = { __VERSION = '0.01' }
@@ -36,37 +37,35 @@ local api_method = {
   'VendorSet'
 }
 
+-- config table
+function _M.new(self, args)
+  auth = {
+    ['Auth/VendorId'] = args.vendor_id,
+    ['Auth/VendorPassword'] = args.vendor_password,
+    ['Auth/UserToken'] = args.user_token,
+    ['Auth/PropertyId'] = args.property_id,
+    ['Auth/UserId'] = args.user_id, --optional
+    ['Auth/UserPassword'] = args.user_password, --optional
+    ['Auth/PMSUserId'] = args.pms_user_id --optional
+  }
+  for k, method in pairs(api_method) do 
+    _M[method] = _M.post_request 
+  end
+  return setmetatable(_M, mt) 
+end
+
 -- create api function call
 -- request params as documented in http://myallocator.github.io/apidocs
 function _M.post_request(self, req)
-  req = req or {} -- avoid nasty error 
-  -- merge with auth
+  req = req or {} 
+  -- merge with auth & only include key with valid value
   for k, v in pairs(auth) do 
-    if v then do req[k] = v end --only include key with valid value
+    if v then req[k] = v end 
   end
-  local res = request.post(myallocator_api_url .. method, {
-    data    = json.encode(req),
-    headers = { ['Content-Type'] = 'application/json' }
-  }) 
+  local method = debug.getinfo(1, "n").name;
+  local headers = { ['Content-Type'] = 'application/json' }
+  local res = request.post(myallocator_api_url .. method, { data = req, headers = headers })
   return res.json()
-end
-
--- config table
-function _M.new(self, auth)
-  auth = {
-    ['Auth/VendorId'] = auth.vendor_id,
-    ['Auth/VendorPassword'] = auth.vendor_password,
-    ['Auth/UserToken'] = auth.user_token,
-    ['Auth/PropertyId'] = auth.property_id,
-    ['Auth/UserId'] = auth.user_id, --optional
-    ['Auth/UserPassword'] = auth.user_password, --optional
-    ['Auth/PMSUserId'] = auth.pms_user_id --optional
-  }
-
-  for method in api_method do 
-    _M[method] = self:post_request 
-  end
-  return setmetatable(_M, mt) 
 end
 
 return _M
