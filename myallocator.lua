@@ -64,7 +64,8 @@ function _M.post_request(self, req)
   end
   local method = debug.getinfo(1, "n").name;
   local headers = { ['Content-Type'] = 'application/json' }
-  return request.post(myallocator_api_url .. method, { data = req, headers = headers })
+  local res = request.post(myallocator_api_url .. method, { data = req, headers = headers })
+  return res.json()
 end
 
 return _M
